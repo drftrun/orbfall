@@ -13,6 +13,7 @@
     "check": "npm run typecheck && npm test && npm run look"
   },
   "dependencies": {
+    "@driftengine/audio": "^4.12.0",
     "@driftengine/core": "^4.12.0",
     "@driftengine/script": "^4.12.0",
     "driftscript": "1.17.0"
