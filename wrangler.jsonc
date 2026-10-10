@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "orbfall",
+  "compatibility_date": "2026-08-30",
+  /*
+   * The built game and nothing else: no Worker code, so every request is a file from `dist/`.
+   * The account comes from `CLOUDFLARE_ACCOUNT_ID` in the environment rather than from this file,
+   * because the repository is public.
+   */
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  },
+  "routes": [{ "pattern": "orbfall.driftengine.dev", "custom_domain": true }]
+}

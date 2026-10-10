@@ -4,6 +4,8 @@ A game built on [DriftEngine](https://driftengine.dev): pilot a hovering orb acr
 island at dusk, gather glowing crystals, and keep clear of the boulders rolling at you. A run lasts
 60 seconds; a crystal is worth a point and a fall off the edge costs three.
 
+**Play it at [orbfall.driftengine.dev](https://orbfall.driftengine.dev)**, in any current browser.
+
 ![Orbfall: the orb, the crystals and the boulders on the island at dusk](docs/orbfall.png)
 
 ## How it was made
@@ -25,6 +27,10 @@ npm run dev      # serve it with hot reload
 npm run check    # typecheck, test, and look at it on WebGPU and WebGL2
 npm run build    # static files in dist/
 ```
+
+Every push to `main` is typechecked, tested, built and deployed to orbfall.driftengine.dev by
+`.github/workflows/deploy.yml`, with the repository secrets `CLOUDFLARE_API_TOKEN` and
+`CLOUDFLARE_ACCOUNT_ID`; `npm run deploy` does the same from a machine logged in to Wrangler.
 
 `src/main.ts` is the program and `src/*.drs` are its rules in DriftScript. `AGENTS.md` is written
 for a coding agent working in this project, and the `driftengine` skill in `.agents/skills/` and

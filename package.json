@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests",
     "look": "node scripts/look.mjs",
-    "check": "npm run typecheck && npm test && npm run look"
+    "check": "npm run typecheck && npm test && npm run look",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@driftengine/audio": "^4.12.0",
@@ -24,6 +25,7 @@
     "@types/node": "^26.2.0",
     "typescript": "^7.0.2",
     "vite": "^8.2.2",
-    "vitest": "^5.0.3"
+    "vitest": "^5.0.3",
+    "wrangler": "^4.149.0"
   }
 }
