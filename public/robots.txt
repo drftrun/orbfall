@@ -1,0 +1,5 @@
+# Content signals: search lets this site be indexed and linked, ai-input lets it be read to answer
+# a question, ai-train lets it be learned from. All three are allowed.
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /

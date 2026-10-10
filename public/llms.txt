@@ -1,0 +1,22 @@
+# Orbfall
+
+> A small 3D arcade game for the browser: pilot a hovering orb across a floating island at dusk, gather glowing crystals, and keep clear of the boulders rolling at you. A coding agent built it with DriftEngine from one prompt, in about fourteen minutes.
+
+Play it at https://orbfall.driftengine.dev in any current browser. A run lasts 60 seconds; a crystal is worth a point and a fall off the edge costs three.
+
+- Keyboard: WASD or the arrows to steer, R to restart, Space or Enter to play again.
+- Gamepad: the left stick to steer, Start to restart, A to play again.
+- Touch: a thumb on the left half steers, a tap on the right plays again.
+
+## How it was made
+
+- [The prompt](https://github.com/drftrun/orbfall/blob/main/PROMPT.md): the whole request, as it was given.
+- [The build log](https://github.com/drftrun/orbfall/blob/main/BUILD-LOG.md): every `npm run check` the agent ran, and every time it looked at the pictures.
+- [The source](https://github.com/drftrun/orbfall): the game, its rules in DriftScript and their tests, with the agent's own commits.
+- [The showcase](https://driftengine.dev/showcase/orbfall): the story on DriftEngine's site, with the game playable in the page.
+
+## Make your own
+
+- `npm create @driftengine@latest my-game` starts a project ready for a coding agent: instructions it reads, the engine's skill, and `npm run check`.
+- [Working with a coding agent](https://driftengine.dev/docs/start/with-an-agent.md): the chapter on all of it.
+- [DriftEngine](https://driftengine.dev/llms.txt): the engine's own index for agents.
