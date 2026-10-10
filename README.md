@@ -1,6 +1,12 @@
 # orbfall
 
-A game built on [DriftEngine](https://driftengine.dev).
+A game built on [DriftEngine](https://driftengine.dev): pilot a hovering orb across a floating
+island at dusk, gather glowing crystals, and keep clear of the boulders rolling at you. A run lasts
+60 seconds; a crystal is worth a point and a fall off the edge costs three.
+
+- **Keyboard**: WASD or the arrows to steer, R to restart, Space or Enter to play again.
+- **Gamepad**: the left stick to steer, Start to restart, A to play again.
+- **Touch**: a thumb on the left half steers, a tap on the right plays again.
 
 ```sh
 npm install
