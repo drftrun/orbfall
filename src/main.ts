@@ -28,6 +28,7 @@ import {
   lerp,
   mulberry32,
   sphereShape,
+  srgbColor,
   startLoop,
 } from '@driftengine/core';
 import type { ShadowCasters, SkyColors, TextStyle, Vec3 } from '@driftengine/core';
@@ -95,16 +96,16 @@ const ENV = createEnvironment({
   // Emissive is multiplied by this: at 0 the crystals and the orb would not glow at all.
   nightFactor: 1,
   emissiveGain: 1.8,
-  fogColor: [0.66, 0.4, 0.42],
+  fogColor: srgbColor(0.66, 0.4, 0.42),
   fogDensity: 0.006,
   fogHeightFalloff: 0.03,
   fogBaseY: -20,
 });
 
 const sky: SkyColors = {
-  top: [0.09, 0.1, 0.3],
-  horizon: [1, 0.5, 0.3],
-  deep: [0.14, 0.09, 0.22],
+  top: srgbColor(0.09, 0.1, 0.3),
+  horizon: srgbColor(1, 0.5, 0.3),
+  deep: srgbColor(0.14, 0.09, 0.22),
   sunDir: SUN,
   sunColor: [2.4, 1.3, 0.6],
   sunAngularRadius: 0.035,
@@ -164,7 +165,7 @@ world.addBody({
   z: 0,
   friction: 0.7,
 });
-const islandMesh = renderer.createMesh(island.build());
+const islandMesh = renderer.createMesh(island.build({ colorSpace: 'srgb' }));
 
 /** Other islands, far off in the haze, so the one under the orb is floating among them. */
 const distant = new MeshBuilder();
@@ -178,7 +179,7 @@ for (let i = 0; i < 7; i += 1) {
   distant.addCylinder([x, y - 0.4, z], r, 0.4, 'y', GRASS, 0, 24);
   distant.addTube([x, y - 0.8, z, x, y - 0.8 - r * 0.9, z, x, y - 0.8 - r * 1.8, z], [r * 0.95, r * 0.55, 0.2], ROCK, 0, 16);
 }
-const distantMesh = renderer.createMesh(distant.build());
+const distantMesh = renderer.createMesh(distant.build({ colorSpace: 'srgb' }));
 // #endregion
 
 // #region orb
@@ -195,7 +196,7 @@ const orbMesh = renderer.createMesh(
   new MeshBuilder()
     .addSphere([0, 0, 0], ORB_RADIUS * 0.8, [0.45, 0.85, 1], 0.8, 28, 18)
     .addCylinder([0, 0, 0], ORB_RADIUS * 1.3, 0.03, 'y', [0.22, 0.5, 0.75], 0.35, 36)
-    .build(),
+    .build({ colorSpace: 'srgb' }),
 );
 // #endregion
 
@@ -230,7 +231,7 @@ const boulderMesh = renderer.createMesh(
       22,
       16,
     )
-    .build(),
+    .build({ colorSpace: 'srgb' }),
 );
 
 /** How many boulders are rolling, where each is aimed, and how long until it aims again. */
@@ -274,7 +275,7 @@ const crystalX = new Float32Array(CRYSTALS);
 const crystalZ = new Float32Array(CRYSTALS);
 const CRYSTAL_Y = 0.95;
 const crystalMesh = renderer.createMesh(
-  new MeshBuilder().addSphere([0, 0, 0], 0.4, [1, 0.38, 0.84], 0.75, 6, 2).build(),
+  new MeshBuilder().addSphere([0, 0, 0], 0.4, [1, 0.38, 0.84], 0.75, 6, 2).build({ colorSpace: 'srgb' }),
 );
 
 /** Somewhere on the island, clear of the orb and of the other crystals. */
@@ -627,10 +628,10 @@ ENV.shadowStrength = 0.75;
 const scoreLine = renderer.createText();
 const banner = renderer.createText();
 const hint = renderer.createText();
-let hudStyle: TextStyle = { ...DEFAULT_TEXT_STYLE, color: [1, 0.96, 0.9], glow: 0.7 };
-let warnStyle: TextStyle = { ...DEFAULT_TEXT_STYLE, color: [1, 0.45, 0.35], glow: 0.9 };
-let hintStyle: TextStyle = { ...DEFAULT_TEXT_STYLE, color: [1, 0.96, 0.9], glow: 0.7 };
-let bannerStyle: TextStyle = { ...DEFAULT_TEXT_STYLE, color: [1, 0.85, 0.5], glow: 0.9 };
+let hudStyle: TextStyle = { ...DEFAULT_TEXT_STYLE, color: srgbColor(1, 0.96, 0.9), glow: 0.7 };
+let warnStyle: TextStyle = { ...DEFAULT_TEXT_STYLE, color: srgbColor(1, 0.45, 0.35), glow: 0.9 };
+let hintStyle: TextStyle = { ...DEFAULT_TEXT_STYLE, color: srgbColor(1, 0.96, 0.9), glow: 0.7 };
+let bannerStyle: TextStyle = { ...DEFAULT_TEXT_STYLE, color: srgbColor(1, 0.85, 0.5), glow: 0.9 };
 const shown = { score: -1, seconds: -1, best: -1, phase: '', hinting: false };
 
 /**
