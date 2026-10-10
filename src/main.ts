@@ -629,8 +629,19 @@ const banner = renderer.createText();
 const hint = renderer.createText();
 let hudStyle: TextStyle = { ...DEFAULT_TEXT_STYLE, color: [1, 0.96, 0.9], glow: 0.7 };
 let warnStyle: TextStyle = { ...DEFAULT_TEXT_STYLE, color: [1, 0.45, 0.35], glow: 0.9 };
+let hintStyle: TextStyle = { ...DEFAULT_TEXT_STYLE, color: [1, 0.96, 0.9], glow: 0.7 };
 let bannerStyle: TextStyle = { ...DEFAULT_TEXT_STYLE, color: [1, 0.85, 0.5], glow: 0.9 };
 const shown = { score: -1, seconds: -1, best: -1, phase: '', hinting: false };
+
+/**
+ * The largest cell, up to `cell`, at which a line fits across the screen with a margin. A phone
+ * held upright is narrower than the hint at the cell its height would give, so each line shrinks to
+ * fit rather than running off both edges, and keeps its full size wherever it fits.
+ */
+function fittedCell(text: ReturnType<typeof renderer.createText>, cell: number, width: number): number {
+  const across = renderer.textWidth(text, 1);
+  return across > 0 ? Math.max(1, Math.min(cell, Math.floor((width * 0.94) / across))) : cell;
+}
 
 function drawHud(): void {
   const seconds = Math.ceil(run.remaining);
@@ -661,17 +672,21 @@ function drawHud(): void {
   const width = renderer.cssWidth;
   const height = renderer.cssHeight;
   const cell = Math.max(2, Math.round(Math.min(width, height) / 220));
-  if (cell !== hudStyle.cellSize) {
-    hudStyle = { ...hudStyle, cellSize: cell };
-    warnStyle = { ...warnStyle, cellSize: cell };
-    bannerStyle = { ...bannerStyle, cellSize: cell * 2 };
+  const scoreCell = fittedCell(scoreLine, cell, width);
+  const hintCell = fittedCell(hint, cell, width);
+  const bannerCell = fittedCell(banner, cell * 2, width);
+  if (scoreCell !== hudStyle.cellSize) {
+    hudStyle = { ...hudStyle, cellSize: scoreCell };
+    warnStyle = { ...warnStyle, cellSize: scoreCell };
   }
+  if (hintCell !== hintStyle.cellSize) hintStyle = { ...hintStyle, cellSize: hintCell };
+  if (bannerCell !== bannerStyle.cellSize) bannerStyle = { ...bannerStyle, cellSize: bannerCell };
   const top = Math.round(height * 0.05) + cell * 7;
   renderer.drawText(
     scoreLine,
     width,
     height,
-    Math.round(width / 2 - renderer.textWidth(scoreLine, cell) / 2),
+    Math.round(width / 2 - renderer.textWidth(scoreLine, scoreCell) / 2),
     top,
     !over && seconds <= 10 ? warnStyle : hudStyle,
     0,
@@ -681,7 +696,7 @@ function drawHud(): void {
       banner,
       width,
       height,
-      Math.round(width / 2 - renderer.textWidth(banner, cell * 2) / 2),
+      Math.round(width / 2 - renderer.textWidth(banner, bannerCell) / 2),
       Math.round(height * 0.42),
       bannerStyle,
       0,
@@ -692,9 +707,9 @@ function drawHud(): void {
       hint,
       width,
       height,
-      Math.round(width / 2 - renderer.textWidth(hint, cell) / 2),
+      Math.round(width / 2 - renderer.textWidth(hint, hintCell) / 2),
       over ? Math.round(height * 0.42) + cell * 12 : top + cell * 12,
-      hudStyle,
+      hintStyle,
       0,
     );
   }
