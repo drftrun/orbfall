@@ -16,9 +16,9 @@
     "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
-    "@driftengine/audio": "^4.13.2",
-    "@driftengine/core": "^4.13.2",
-    "@driftengine/script": "^4.13.2",
+    "@driftengine/audio": "^4.13.3",
+    "@driftengine/core": "^4.13.3",
+    "@driftengine/script": "^4.13.3",
     "driftscript": "1.17.0"
   },
   "devDependencies": {
